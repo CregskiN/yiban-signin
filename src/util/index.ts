@@ -17,6 +17,26 @@ export function generateHTML(content: string) {
  * @param str 
  */
 export function isQQEmail(str: string): boolean {
-    var reg =  /^([a-zA-Z0-9]{5,})+@([a-zA-Z0-9])+(.[a-zA-Z0-9])+/;
+    var reg = /^([a-zA-Z0-9]{5,})+@([a-zA-Z0-9])+(.[a-zA-Z0-9])+/;
     return reg.test(str);
+}
+
+/**
+ * formObj转化为url形式
+ * @param obj 
+ */
+export function obj2URI(obj: { [key: string]: any }) {
+    if (Object.prototype.toString.call(obj) !== '[object Object]') {
+        console.error('obj2Url接受参数不为object');
+        return '';
+    }
+    let str = '';
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            str = `${str}&${key}=${obj[key]}`;
+        }
+    }
+    str = str.substr(1);
+    str = encodeURI(str);
+    return str;
 }

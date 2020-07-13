@@ -1,16 +1,16 @@
 {
-  "name": "yiban-goout",
+  "name": "sss",
   "version": "0.1.0",
   "description": "去你的易班签到",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:build": "tsc -w",
-    "dev:start": "nodemon node dist/sign.js",
-    "dev": "tsc && concurrently yarn:sign:*",
+    "dev:start": "nodemon node dist/app.js",
+    "dev": "tsc && concurrently yarn:start:*",
     "start:build": "tsc",
-    "start:start": "nodemon node dist/sign.js",
-    "start": "tsc && node ./dist/sign.js"
+    "start:start": "nodemon node dist/app.js",
+    "start": "tsc && node ./dist/app.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/CregskiN/yiban-signin#readme",
   "dependencies": {
+    "@types/koa-static": "^4.0.1",
     "@types/puppeteer": "^3.0.1",
     "@types/require-directory": "^2.1.1",
     "axios": "^0.19.2",

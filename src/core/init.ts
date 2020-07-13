@@ -1,10 +1,10 @@
 import Koa from 'koa';
 
 import yibanRouter from '../api/v1/sign';
-import userRouter from '../api/v1/user';
 import manageRouter from '../api/v1/manage';
-import YibanManager from '../services/yiban';
-import Storage from '../util/storage';
+// import YibanManager from '../services/yiban';
+// import Storage from '../util/storage';
+
 /**
  * 初始化签到系统
  */
@@ -14,7 +14,7 @@ export class InitSignManager {
     static initCore(app: Koa) {
         InitSignManager.app = app;
         InitSignManager.initLoadRouter();
-        InitSignManager.initShadule();
+        // InitSignManager.initShadule();
     }
 
     /**
@@ -22,20 +22,19 @@ export class InitSignManager {
      */
     static initLoadRouter() {
         InitSignManager.app.use(yibanRouter.routes());
-        // InitManageManager.app.use(userRouter.routes());
-        // InitManageManager.app.use(manageRouter.routes());
+        InitSignManager.app.use(manageRouter.routes());
     }
 
-    /**
-     * 初始化 将已有用户加入签到计时任务
-     */
-    static async initShadule() {
-        const y = YibanManager.getInstance();
-        const usersData = Storage.getUsers();
-        for (let key in usersData) {
-            await y.shadule(usersData[key]);
-        }
-    }
+    // /**
+    //  * 初始化 将已有用户加入签到计时任务
+    //  */
+    // static async initShadule() {
+    //     const y = YibanManager.getInstance();
+    //     const usersData = Storage.getUsers();
+    //     for (let key in usersData) {
+    //         await y.shadule(usersData[key]);
+    //     }
+    // }
 
 }
 
@@ -54,7 +53,7 @@ export class InitManageManager {
      * 批量导入、注册路由
      */
     static initLoadRouter() {
-        InitManageManager.app.use(userRouter.routes());
+        // InitManageManager.app.use(userRouter.routes());
         InitManageManager.app.use(manageRouter.routes());
     }
 

@@ -8,7 +8,7 @@ export default class Storage {
      * 获取已有的用户数据，以启动定时任务
      */
     static getUsers() {
-        console.log(path.resolve(process.cwd(), './static/data.json'));
+        // console.log(path.resolve(process.cwd(), './static/data.json'));
         const content = fs.readFileSync(path.resolve(process.cwd(), './static/data.json'), 'utf-8');
         let fileContent: Yiban.UsersData = {};
         if (content.length !== 0) {

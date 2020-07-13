@@ -1,6 +1,10 @@
 export default {
     server: {
         port: 8100,
+        baseUrl: 'http://www.cregskin.com',
+        // baseUrl: 'http://www.localhost.com:8100',
+        staticPath: '/yiban-signin/static'
+        // staticPath: '/static'
     },
 
     manager: {
