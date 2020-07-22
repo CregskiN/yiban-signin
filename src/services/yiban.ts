@@ -46,10 +46,13 @@ class YibanManager {
      * @param JSESESSIONIDObj 
      */
     async signup(JSESESSIONIDObj: Yiban.JSESESSIONIDObj, formObj: YibanRequest.UserSubmitToUs) {
-        delete formObj['url'];
-        delete formObj['email'];
-        const finalFormObj = obj2URI(formObj);
-        return await axios.post('http://211.68.191.30/coronavirus/sign/submit', finalFormObj, {
+        let finalFormObj: Partial<YibanRequest.UsSubmitToYiban> = {};
+        for (let key in formObj) {
+            if (key !== 'url' && key !== 'email') {
+                finalFormObj[key] = formObj[key];
+            }
+        }
+        return await axios.post('http://211.68.191.30/coronavirus/sign/submit', obj2URI(finalFormObj), {
             headers: {
                 'Accept': '*/*',
                 'X-Requested-With': 'XMLHttpRequest',
@@ -58,7 +61,7 @@ class YibanManager {
                 'Cookie': `client=android;JSESSIONID=${JSESESSIONIDObj.JSESESSIONID}`,
             }
         }).then(res => res.data).catch(err => {
-            console.error(err);
+            console.error(`${new Date()}数据提交至易班服务器时发生错误`, err);
             throw new SignupException('提交至易班服务器时，出现错误');
         })
     }
@@ -87,9 +90,12 @@ class YibanManager {
         const { url, email } = user;
         // 获取 jseSessionIdObj
         const jseSessionIdObj = await y.getJSESESSIONIDCookie(url);
+        console.log('本次executeSignOnce获取的user为', user);
+        console.log('本次executeSignOnce获取的JSESSIONID为', jseSessionIdObj);
+
         // 签到
         let res = await y.signup(jseSessionIdObj, user);
-        console.log(res);
+        // console.log(res);
 
         // console.log(`用户${email}的截图为${res}.png`);
         const picName = (await Puppeteer.getScreenShot(url)) + '.png';

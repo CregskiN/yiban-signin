@@ -25,11 +25,11 @@ router.post('/start', async () => {
     const users = Storage.getUsers();
     const y = YibanManager.getInstance();
     y.schedule = null as any;
-    // y.schedule = Schedule.scheduleCronstyle('* * * * * *', async () => {
-    for (let email in users) {
-        await y.executeSignOnce(users[email]); // 异步，此处不再限制
-    }
-    // })
+    y.schedule = Schedule.scheduleCronstyle('0 10 0 * * *', async () => {
+        for (let email in users) {
+            await y.executeSignOnce(users[email]); // 异步，此处不再限制
+        }
+    })
     throw new Success(`签到系统启动成功 - ${y.schedule ? '已安排定时任务' : '未安排定时任务'}`)
 })
 

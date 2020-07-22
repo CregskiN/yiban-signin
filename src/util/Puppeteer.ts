@@ -1,6 +1,12 @@
 import puppeteer from 'puppeteer';
 import path from 'path';
 
+
+const puupeteerConfig = {
+    headless: true,
+    args: ['--no-sandbox']
+};
+
 export default class Puppeteer {
     static filePath = path.resolve(process.cwd(), './static');
 
@@ -9,7 +15,7 @@ export default class Puppeteer {
      * @param url 
      */
     static async getCookies(url: string) {
-        return await puppeteer.launch().then(async browser => {
+        return await puppeteer.launch(puupeteerConfig).then(async browser => {
             try {
                 const page = await browser.newPage();
                 await page.goto(url);
@@ -17,7 +23,7 @@ export default class Puppeteer {
                 await browser.close();
                 return cookies;
             } catch (err) {
-                console.error('puppeteer在获取用户JSESSIONID时发生错误');
+                console.error('puppeteer在获取用户JSESSIONID时发生错误，此时的URL为', url);
                 return [];
             }
 
@@ -29,7 +35,7 @@ export default class Puppeteer {
      * @param url 
      */
     static async getScreenShot(url: string) {
-        return await puppeteer.launch().then(async browser => {
+        return await puppeteer.launch(puupeteerConfig).then(async browser => {
             try {
                 console.log('截图', url);
 

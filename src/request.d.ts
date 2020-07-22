@@ -17,5 +17,20 @@ declare namespace YibanRequest {
         position: string;
         ishb: number;
         email: string;
+        [propName: string]: any;
+    }
+
+    interface UsSubmitToYiban {
+        q1: '否',
+        q2: '否',
+        q3: '否',
+        q4: '否',
+        q5: '否',
+        q6: '否',
+        q7: '否|',
+        q8: '否|',
+        position: string;
+        ishb: number;
+        [propName: string]: any;
     }
 }
